@@ -44,7 +44,10 @@
 #include <linux/debugobjects.h>
 #include <linux/bug.h>
 #include <linux/compiler.h>
+#include <linux/irqflags.h>
+
 #include <asm/barrier.h>
+
 
 #ifndef CONFIG_TINY_RCU
 extern int rcu_expedited; /* for sysctl */
