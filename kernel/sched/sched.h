@@ -1235,7 +1235,7 @@ extern const u32 sched_prio_to_wmult[40];
  *
  * ENQUEUE_HEAD      - place at front of runqueue (tail if not specified)
  * ENQUEUE_REPLENISH - CBS (replenish runtime and postpone deadline)
- * ENQUEUE_WAKING    - sched_class::task_waking was called
+ * ENQUEUE_MIGRATED  - the task was migrated during wakeup
  *
  */
 
@@ -1253,9 +1253,9 @@ extern const u32 sched_prio_to_wmult[40];
 #define ENQUEUE_HEAD		0x10
 #define ENQUEUE_REPLENISH	0x20
 #ifdef CONFIG_SMP
-#define ENQUEUE_WAKING		0x40
+#define ENQUEUE_MIGRATED	0x40
 #else
-#define ENQUEUE_WAKING		0x00
+#define ENQUEUE_MIGRATED	0x00
 #endif
 #define ENQUEUE_WAKEUP_NEW	0x80
 
@@ -1289,7 +1289,6 @@ struct sched_class {
 	void (*migrate_task_rq)(struct task_struct *p);
 
 	void (*post_schedule) (struct rq *this_rq);
-	void (*task_waking) (struct task_struct *task);
 	void (*task_woken) (struct rq *this_rq, struct task_struct *task);
 
 	void (*set_cpus_allowed)(struct task_struct *p,
