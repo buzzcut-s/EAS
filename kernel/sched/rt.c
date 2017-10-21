@@ -4,6 +4,7 @@
  */
 
 #include "sched.h"
+#include "pelt.h"
 
 #include <linux/interrupt.h>
 #include <linux/slab.h>
@@ -1647,12 +1648,17 @@ pick_next_task_rt(struct rq *rq, struct task_struct *prev)
 
 	set_post_schedule(rq);
 
+	if (p)
+		update_rt_rq_load_avg(rq_clock_task(rq), cpu_of(rq), rt_rq, 0);
+
 	return p;
 }
 
 static void put_prev_task_rt(struct rq *rq, struct task_struct *p)
 {
 	update_curr_rt(rq);
+
+	update_rt_rq_load_avg(rq_clock_task(rq), cpu_of(rq), &rq->rt, 1);
 
 	/*
 	 * The previous task needs to be made eligible for pushing
@@ -2544,6 +2550,7 @@ static void task_tick_rt(struct rq *rq, struct task_struct *p, int queued)
 	struct sched_rt_entity *rt_se = &p->rt;
 
 	update_curr_rt(rq);
+	update_rt_rq_load_avg(rq_clock_task(rq), cpu_of(rq), &rq->rt, 1);
 
 	if (rq->rt.rt_nr_running)
 		sched_rt_update_capacity_req(rq);
