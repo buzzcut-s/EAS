@@ -4997,7 +4997,7 @@ long __sched io_schedule_timeout(long timeout)
 	return ret;
 }
 
-void io_schedule(void)
+void __sched io_schedule(void)
 {
 	int token;
 
