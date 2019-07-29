@@ -97,7 +97,7 @@ SCHED_FEAT(NUMA_RESIST_LOWER, false)
 /*
  * UtilEstimation. Use estimated CPU utilization.
  */
-SCHED_FEAT(UTIL_EST, true)
+SCHED_FEAT(UTIL_EST, false)
 
 /*
  * Energy aware scheduling. Use platform energy model to guide scheduling
