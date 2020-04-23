@@ -9764,7 +9764,7 @@ more_balance:
 			    sd->cache_nice_tries +
 			    NEED_ACTIVE_BALANCE_THRESHOLD - 1;
 		}
-	} else
+	} else {
 		sd->nr_balance_failed = 0;
 	}
 	if (likely(!active_balance) || voluntary_active_balance(&env)) {
